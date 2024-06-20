@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-HotelSchedulesApplication<hotel-schedules>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.schedules.hotel_schedules.HotelSchedulesApplication",
+            "projectName": "hotel-schedules",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
