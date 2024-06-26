@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class RabbiMQConfig {
+public class RabbitMQConfig {
 
     @Value("${broker.queue.schedules.name}")
     private String queue;

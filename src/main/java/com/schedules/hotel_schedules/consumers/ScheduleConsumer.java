@@ -1,4 +1,4 @@
-package com.schedules.hotel_schedules.consumer;
+package com.schedules.hotel_schedules.consumers;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;
