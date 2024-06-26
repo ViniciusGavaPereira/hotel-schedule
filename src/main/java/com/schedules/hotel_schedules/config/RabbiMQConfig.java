@@ -1,4 +1,4 @@
-package config;
+package com.schedules.hotel_schedules.config;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Value;
