@@ -4,6 +4,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.schedules.hotel_schedules.dtos.RoomDto;
 
 @Component
@@ -22,7 +24,15 @@ public class ScheduleProducer {
     private String routingKey;
 
     public void saveRoom(RoomDto test) {
-        rabbitTemplate.convertAndSend("", routingKey, test.toString());
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            String json = objectMapper.writeValueAsString(test);
+
+            rabbitTemplate.convertAndSend("", routingKey, json);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
 }

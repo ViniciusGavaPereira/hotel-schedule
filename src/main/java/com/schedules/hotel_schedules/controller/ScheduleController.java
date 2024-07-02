@@ -23,7 +23,6 @@ public class ScheduleController {
 
     @GetMapping(value = "/all")
     public List<Schedule> findAll() {
-
         List<Schedule> result = scheduleService.findAll();
         return result;
     }

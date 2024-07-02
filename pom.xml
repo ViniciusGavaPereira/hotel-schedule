@@ -54,6 +54,10 @@
 			<artifactId>spring-rabbit</artifactId>
 			<version>3.1.6</version>
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
 
 
 <!-- https://mvnrepository.com/artifact/javax.mail/mail -->
