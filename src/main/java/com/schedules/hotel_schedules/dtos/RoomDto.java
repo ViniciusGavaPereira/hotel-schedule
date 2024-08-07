@@ -1,10 +1,6 @@
 package com.schedules.hotel_schedules.dtos;
 
-import java.util.stream.Collectors;
-
 import com.schedules.hotel_schedules.entities.RoomStatus;
-
-import java.util.List;
 
 public class RoomDto {
 
