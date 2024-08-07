@@ -4,6 +4,7 @@ import com.schedules.hotel_schedules.entities.RoomStatus;
 
 public class RoomDto {
 
+    private Integer id;
     private Integer roomNumber;
     private String name;
     private Float pricePerHour;
@@ -12,11 +13,20 @@ public class RoomDto {
     public RoomDto() {
     }
 
-    public RoomDto(Integer roomNumber, String name, Float pricePerHour, RoomStatus roomStatus) {
+    public RoomDto(Integer id, Integer roomNumber, String name, Float pricePerHour, RoomStatus roomStatus) {
+        this.id = id;
         this.roomNumber = roomNumber;
         this.name = name;
         this.pricePerHour = pricePerHour;
         this.roomStatus = roomStatus;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getRoomNumber() {
@@ -53,8 +63,8 @@ public class RoomDto {
 
     @Override
     public String toString() {
-        return "RoomDto [roomNumber=" + roomNumber + ", name=" + name + ", pricePerHour=" + pricePerHour
-                + ", roomStatus=" + roomStatus + "]";
+        return "Id: " + id + "\nRoomNumber: " + roomNumber + "\nName: " + name + "\nPricePerHour: " + pricePerHour
+                + "\nRoomStatus: " + roomStatus;
     }
 
 }

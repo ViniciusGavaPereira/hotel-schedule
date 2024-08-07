@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.schedules.hotel_schedules.dtos.ClientDto;
+import com.schedules.hotel_schedules.dtos.RoomDto;
 
-@FeignClient("hotel-client-ms")
-public interface PersonClient {
+@FeignClient("hotel-room-ms")
+public interface RoomClient {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/client/id/{id}")
-    ClientDto findById(@PathVariable Integer id);
+    @RequestMapping(method = RequestMethod.GET, value = "room/id/{id}")
+    RoomDto findById(@PathVariable Integer id);
 
 }
