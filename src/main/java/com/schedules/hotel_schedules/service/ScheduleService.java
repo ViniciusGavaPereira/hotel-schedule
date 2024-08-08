@@ -44,6 +44,13 @@ public class ScheduleService {
         return room;
     }
 
+    public RoomDto updateRoomStatus(Schedule scheduleInput) {
+        RoomDto room = roomClient.updateRoomStatus(
+                scheduleInput.getFk_Id_Room(),
+                scheduleInput.getRoomStatus());
+        return room;
+    }
+
     public Schedule findById(Long id) {
         Schedule result = scheduleRepository.findById(id)
                 .orElseThrow(() -> new CustomApplicationException("Schedule with ID: " + id + " not found",
@@ -61,6 +68,8 @@ public class ScheduleService {
         System.out.println(room.getRoomStatus());
 
         if (room.getRoomStatus() == RoomStatus.FREE) {
+            roomClient.updateRoomStatus(room.getId(), scheduleInput.getRoomStatus());
+
             return scheduleRepository.save(scheduleInput);
         } else {
             throw new CustomApplicationException(
