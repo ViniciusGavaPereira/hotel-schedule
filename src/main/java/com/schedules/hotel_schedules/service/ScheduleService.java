@@ -40,6 +40,10 @@ public class ScheduleService {
         return room;
     }
 
+    public Schedule createSchedule(Schedule scheduleInput) {
+        return scheduleRepository.save(scheduleInput);
+    }
+
     /*
      * public void findById(Integer id) {
      * scheduleProducer.scheduleSearch(id);
