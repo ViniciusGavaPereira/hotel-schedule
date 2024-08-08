@@ -46,6 +46,12 @@ public class ScheduleController {
     @PostMapping("/create/v1/")
     public ResponseEntity<ScheduleDto> createSchedule(@RequestBody Schedule scheduleInput) {
 
+        // Connect to Client's endpoint
+        scheduleService.findPerson(scheduleInput.getFk_Id_Client());
+
+        // Connect to Room's endpoint
+        scheduleService.findRoom(scheduleInput.getFk_Id_Room());
+
         Schedule schedule = scheduleService.createSchedule(scheduleInput);
 
         return new ResponseEntity<>(new ScheduleDto(schedule),
