@@ -32,17 +32,22 @@ public class Schedule implements Serializable {
     @Column(name = "Fk_Id_Client", nullable = false)
     private int fk_Id_Client;
 
+    @Column(name = "Status", nullable = false)
+    private RoomStatus roomStatus;
+
     public Schedule() {
     }
 
     public Schedule(Long id, String entranceTime, String exitTime, double bill, int fk_Id_Room,
             int fk_Id_Client) {
+
         this.id = id;
         this.entranceTime = entranceTime;
         this.exitTime = exitTime;
         this.bill = bill;
         this.fk_Id_Room = fk_Id_Room;
         this.fk_Id_Client = fk_Id_Client;
+        this.roomStatus = RoomStatus.FREE;
     }
 
     public Long getId() {
@@ -93,11 +98,34 @@ public class Schedule implements Serializable {
         this.fk_Id_Client = fk_Id_Client;
     }
 
+    public String getEntranceTime() {
+        return entranceTime;
+    }
+
+    public void setEntranceTime(String entranceTime) {
+        this.entranceTime = entranceTime;
+    }
+
+    public String getExitTime() {
+        return exitTime;
+    }
+
+    public void setExitTime(String exitTime) {
+        this.exitTime = exitTime;
+    }
+
+    public RoomStatus getRoomStatus() {
+        return roomStatus;
+    }
+
+    public void setRoomStatus(RoomStatus roomStatus) {
+        this.roomStatus = roomStatus;
+    }
+
     @Override
     public String toString() {
-        return "Schedule [id=" + id + ", entrance=" + entranceTime + ", exit=" + exitTime + ", bill=" + bill
-                + ", fk_Id_Room="
-                + fk_Id_Room + ", fk_Id_Client=" + fk_Id_Client + "]";
+        return "Schedule [id=" + id + ", entranceTime=" + entranceTime + ", exitTime=" + exitTime + ", bill=" + bill
+                + ", fk_Id_Room=" + fk_Id_Room + ", fk_Id_Client=" + fk_Id_Client + ", roomStatus=" + roomStatus + "]";
     }
 
 }

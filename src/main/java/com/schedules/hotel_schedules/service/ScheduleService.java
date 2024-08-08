@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.schedules.hotel_schedules.dtos.ClientDto;
 import com.schedules.hotel_schedules.dtos.RoomDto;
+import com.schedules.hotel_schedules.entities.RoomStatus;
 import com.schedules.hotel_schedules.entities.Schedule;
 import com.schedules.hotel_schedules.http.PersonClient;
 import com.schedules.hotel_schedules.http.RoomClient;
@@ -44,6 +45,14 @@ public class ScheduleService {
     }
 
     public Schedule createSchedule(Schedule scheduleInput) {
+
+        // Connect to Client's endpoint
+        findPerson(scheduleInput.getFk_Id_Client());
+
+        // Connect to Room's endpoint
+        findRoom(scheduleInput.getFk_Id_Room());
+        scheduleInput.setRoomStatus(RoomStatus.FREE);
+
         return scheduleRepository.save(scheduleInput);
     }
 
