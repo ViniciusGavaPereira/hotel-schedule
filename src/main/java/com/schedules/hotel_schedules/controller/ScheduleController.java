@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,13 @@ public class ScheduleController {
         return result;
     }
 
+    @GetMapping(value = "/id/{id}")
+    public ResponseEntity<ScheduleDto> findById(@PathVariable Long id) {
+        Schedule result = scheduleService.findById(id);
+
+        return new ResponseEntity<ScheduleDto>(new ScheduleDto(result), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/v0.5/test/{idPerson}/{idRoom}")
     public String test(@PathVariable Integer idPerson, @PathVariable Integer idRoom) {
 
@@ -56,6 +64,12 @@ public class ScheduleController {
 
         return new ResponseEntity<>(new ScheduleDto(schedule),
                 HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<?> deleteRoom(@PathVariable Long id) {
+        scheduleService.deleteScheduleById(id);
+        return new ResponseEntity<>("Schedule with id " + id + " was deleted", HttpStatus.ACCEPTED);
     }
 
 }
