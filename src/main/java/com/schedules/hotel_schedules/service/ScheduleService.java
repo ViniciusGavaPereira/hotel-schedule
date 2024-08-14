@@ -89,6 +89,13 @@ public class ScheduleService {
         Schedule schedule = scheduleRepository.findById(scheduleInput.getId())
                 .orElseThrow(() -> new RuntimeException("Schedule not found"));
 
+        // Connect to Client's endpoint
+        findPerson(scheduleInput.getFk_Id_Client());
+
+        // Connect to Room's endpoint
+        RoomDto room = findRoom(scheduleInput.getFk_Id_Room());
+        System.out.println(room.getRoomStatus());
+
         schedule.setEntranceTime(scheduleInput.getEntranceTime());
         schedule.setExitTime(scheduleInput.getExitTime());
         schedule.setBill(scheduleInput.getBill());
