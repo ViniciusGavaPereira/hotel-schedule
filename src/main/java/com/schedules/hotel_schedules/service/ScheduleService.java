@@ -85,6 +85,22 @@ public class ScheduleService {
 
     }
 
+    public Schedule updateSchedule(Schedule scheduleInput) {
+        Schedule schedule = scheduleRepository.findById(scheduleInput.getId())
+                .orElseThrow(() -> new RuntimeException("Schedule not found"));
+
+        schedule.setEntranceTime(scheduleInput.getEntranceTime());
+        schedule.setExitTime(scheduleInput.getExitTime());
+        schedule.setBill(scheduleInput.getBill());
+        schedule.setFk_Id_Room(scheduleInput.getFk_Id_Room());
+        schedule.setFk_Id_Client(scheduleInput.getFk_Id_Client());
+        schedule.setRoomStatus(scheduleInput.getRoomStatus());
+
+        scheduleRepository.save(schedule);
+
+        return schedule;
+    }
+
     /*
      * public void findById(Integer id) {
      * scheduleProducer.scheduleSearch(id);

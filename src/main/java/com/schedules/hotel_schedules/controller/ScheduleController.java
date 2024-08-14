@@ -3,6 +3,7 @@ package com.schedules.hotel_schedules.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,11 @@ import com.schedules.hotel_schedules.dtos.RoomDto;
 import com.schedules.hotel_schedules.dtos.ScheduleDto;
 import com.schedules.hotel_schedules.entities.Schedule;
 import com.schedules.hotel_schedules.service.ScheduleService;
+
+import exception.CustomApplicationException;
+
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
@@ -58,6 +63,20 @@ public class ScheduleController {
 
         return new ResponseEntity<>(new ScheduleDto(schedule),
                 HttpStatus.CREATED);
+    }
+
+    @PutMapping("/update/")
+    public ResponseEntity<ScheduleDto> updateSchedule(@RequestBody Schedule scheduleInput) {
+
+        try {
+            Schedule result = scheduleService.updateSchedule(scheduleInput);
+            return new ResponseEntity<ScheduleDto>(new ScheduleDto(result), HttpStatus.OK);
+
+        } catch (EmptyResultDataAccessException e) {
+            throw new CustomApplicationException("Schedule not found", HttpStatus.NOT_FOUND);
+
+        }
+
     }
 
     @DeleteMapping(value = "/delete/{id}")
