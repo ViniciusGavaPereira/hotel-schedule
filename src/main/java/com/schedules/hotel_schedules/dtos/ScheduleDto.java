@@ -2,6 +2,8 @@ package com.schedules.hotel_schedules.dtos;
 
 import com.schedules.hotel_schedules.entities.Schedule;
 
+import jakarta.persistence.Column;
+
 public class ScheduleDto {
 
     private Long id;
@@ -10,17 +12,20 @@ public class ScheduleDto {
     private double bill;
     private int fk_Id_Room;
     private int fk_Id_Client;
+    private int fk_Id_Pedido;
 
     public ScheduleDto() {
     }
 
-    public ScheduleDto(Long id, String entranceTime, String exitTime, double bill, int fk_Id_Room, int fk_Id_Client) {
+    public ScheduleDto(Long id, String entranceTime, String exitTime, double bill, int fk_Id_Room, int fk_Id_Client,
+            int fk_Id_Pedido) {
         this.id = id;
         this.entranceTime = entranceTime;
         this.exitTime = exitTime;
         this.bill = bill;
         this.fk_Id_Room = fk_Id_Room;
         this.fk_Id_Client = fk_Id_Client;
+        this.fk_Id_Pedido = fk_Id_Pedido;
     }
 
     public ScheduleDto(Schedule schedule) {
@@ -30,6 +35,7 @@ public class ScheduleDto {
         bill = schedule.getBill();
         fk_Id_Room = schedule.getFk_Id_Room();
         fk_Id_Client = schedule.getFk_Id_Client();
+        fk_Id_Pedido = schedule.getFk_Id_Pedido();
     }
 
     public Long getId() {
@@ -80,10 +86,19 @@ public class ScheduleDto {
         this.fk_Id_Client = fk_Id_Client;
     }
 
+    public int getFk_Id_Pedido() {
+        return fk_Id_Pedido;
+    }
+
+    public void setFk_Id_Pedido(int fk_Id_Pedido) {
+        this.fk_Id_Pedido = fk_Id_Pedido;
+    }
+
     @Override
     public String toString() {
         return "ScheduleDto [id=" + id + ", entranceTime=" + entranceTime + ", exitTime=" + exitTime + ", bill=" + bill
-                + ", fk_Id_Room=" + fk_Id_Room + ", fk_Id_Client=" + fk_Id_Client + "]";
+                + ", fk_Id_Room=" + fk_Id_Room + ", fk_Id_Client=" + fk_Id_Client + ", fk_Id_Pedido=" + fk_Id_Pedido
+                + "]";
     }
 
 }

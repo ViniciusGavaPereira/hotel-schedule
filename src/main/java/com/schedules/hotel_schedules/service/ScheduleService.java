@@ -108,9 +108,9 @@ public class ScheduleService {
         return schedule;
     }
 
-    /*
-     * public void findById(Integer id) {
-     * scheduleProducer.scheduleSearch(id);
-     * }
-     */
+    public int findLastOrder() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findLastOrder'");
+    }
+
 }

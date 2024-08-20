@@ -2,6 +2,10 @@ package com.schedules.hotel_schedules.entities;
 
 import java.io.Serializable;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.schedules.hotel_schedules.service.ScheduleService;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,6 +39,12 @@ public class Schedule implements Serializable {
     @Column(name = "Status", nullable = false)
     private RoomStatus roomStatus;
 
+    @Column(name = "Fk_Id_Pedido", nullable = false)
+    private int fk_Id_Pedido;
+
+    @Autowired
+    private ScheduleService scheduleService;
+
     public Schedule() {
     }
 
@@ -48,6 +58,7 @@ public class Schedule implements Serializable {
         this.fk_Id_Room = fk_Id_Room;
         this.fk_Id_Client = fk_Id_Client;
         this.roomStatus = RoomStatus.FREE;
+        this.fk_Id_Pedido = createOrderNumber();
     }
 
     public Long getId() {
@@ -122,10 +133,23 @@ public class Schedule implements Serializable {
         this.roomStatus = roomStatus;
     }
 
+    public int getFk_Id_Pedido() {
+        return fk_Id_Pedido;
+    }
+
+    public void setFk_Id_Pedido(int fk_Id_Pedido) {
+        this.fk_Id_Pedido = fk_Id_Pedido;
+    }
+
     @Override
     public String toString() {
         return "Schedule [id=" + id + ", entranceTime=" + entranceTime + ", exitTime=" + exitTime + ", bill=" + bill
-                + ", fk_Id_Room=" + fk_Id_Room + ", fk_Id_Client=" + fk_Id_Client + ", roomStatus=" + roomStatus + "]";
+                + ", fk_Id_Room=" + fk_Id_Room + ", fk_Id_Client=" + fk_Id_Client + ", roomStatus=" + roomStatus
+                + ", fk_Id_Pedido=" + fk_Id_Pedido + "]";
+    }
+
+    public int createOrderNumber() {
+        return scheduleService.findLastOrder();
     }
 
 }
