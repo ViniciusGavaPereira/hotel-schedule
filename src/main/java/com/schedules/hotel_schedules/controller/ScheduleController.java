@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import com.schedules.hotel_schedules.dtos.ClientDto;
 import com.schedules.hotel_schedules.dtos.RoomDto;
 import com.schedules.hotel_schedules.dtos.ScheduleDto;
+import com.schedules.hotel_schedules.dtos.ScheduleTimeDto;
 import com.schedules.hotel_schedules.entities.Schedule;
 import com.schedules.hotel_schedules.service.ScheduleService;
 
@@ -58,11 +59,10 @@ public class ScheduleController {
         return "Person: " + clientResult.toString() + "\nRoom: " + roomResult.toString();
     }
 
-    @GetMapping("/findByTime/{entraceDay}/{entranceTime}/{exitDay}/{exitTime}")
-    public List<Schedule> getMethodName(@PathVariable String entraceDay, @PathVariable String entranceTime,
-            @PathVariable String exitDay, @PathVariable String exitTime) {
+    @GetMapping("/findByTime/")
+    public List<Schedule> getMethodName(@RequestBody ScheduleTimeDto schedule) {
 
-        return scheduleService.findByTime(entraceDay, entranceTime, exitDay, exitTime);
+        return scheduleService.findByTime(schedule);
     }
 
     @Transactional

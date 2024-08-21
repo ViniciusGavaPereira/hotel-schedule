@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.schedules.hotel_schedules.dtos.ClientDto;
 import com.schedules.hotel_schedules.dtos.RoomDto;
+import com.schedules.hotel_schedules.dtos.ScheduleTimeDto;
 import com.schedules.hotel_schedules.entities.Schedule;
 import com.schedules.hotel_schedules.http.InventoryClient;
 import com.schedules.hotel_schedules.http.PersonClient;
@@ -106,8 +107,9 @@ public class ScheduleService {
         return inventoryClient.findLastOrder();
     }
 
-    public List<Schedule> findByTime(String entraceDay, String entranceTime, String exitDay, String exitTime) {
-        return scheduleRepository.findByTime(entraceDay, entranceTime, exitDay, exitTime);
+    public List<Schedule> findByTime(ScheduleTimeDto schedule) {
+        return scheduleRepository.findByTime(schedule.getEntranceDay(), schedule.getEntranceTime(),
+                schedule.getExitDay(), schedule.getExitTime());
     }
 
 }
