@@ -13,7 +13,7 @@ public class OrdersDto {
 
     public OrdersDto(long id, Integer orderNumber, float price, Integer quantity, int fkIdInventory, int fkIdSchedule) {
         this.id = id;
-        OrderNumber = orderNumber;
+        this.OrderNumber = orderNumber;
         this.price = price;
         this.quantity = quantity;
         this.fkIdInventory = fkIdInventory;

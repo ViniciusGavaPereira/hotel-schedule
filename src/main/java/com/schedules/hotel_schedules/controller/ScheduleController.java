@@ -19,6 +19,7 @@ import com.schedules.hotel_schedules.entities.Schedule;
 import com.schedules.hotel_schedules.service.ScheduleService;
 
 import exception.CustomApplicationException;
+import jakarta.transaction.Transactional;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -56,6 +57,7 @@ public class ScheduleController {
         return "Person: " + clientResult.toString() + "\nRoom: " + roomResult.toString();
     }
 
+    @Transactional
     @PostMapping("/create/v1/")
     public ResponseEntity<ScheduleDto> createSchedule(@RequestBody Schedule scheduleInput) {
 

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.schedules.hotel_schedules.dtos.ClientDto;
 import com.schedules.hotel_schedules.dtos.RoomDto;
-import com.schedules.hotel_schedules.entities.RoomStatus;
 import com.schedules.hotel_schedules.entities.Schedule;
+import com.schedules.hotel_schedules.http.InventoryClient;
 import com.schedules.hotel_schedules.http.PersonClient;
 import com.schedules.hotel_schedules.http.RoomClient;
 import com.schedules.hotel_schedules.repositories.ScheduleRepository;
@@ -27,6 +27,9 @@ public class ScheduleService {
 
     @Autowired
     private RoomClient roomClient;
+
+    @Autowired
+    private InventoryClient inventoryClient;
 
     public ClientDto findPerson(Integer id) {
 
@@ -65,18 +68,9 @@ public class ScheduleService {
 
         // Connect to Room's endpoint
         RoomDto room = findRoom(scheduleInput.getFk_Id_Room());
-        System.out.println(room.getRoomStatus());
 
-        if (room.getRoomStatus() == RoomStatus.FREE) {
-            roomClient.updateRoomStatus(room.getId(), scheduleInput.getRoomStatus());
-
-            return scheduleRepository.save(scheduleInput);
-        } else {
-            throw new CustomApplicationException(
-                    "Room with id " + room.getId() + " and number " + room.getRoomNumber() +
-                            " is already " + room.getRoomStatus().toString().toLowerCase(),
-                    HttpStatus.FORBIDDEN);
-        }
+        scheduleInput.setfk_Id_Order(inventoryClient.findLastOrder());
+        return scheduleRepository.save(scheduleInput);
 
     }
 
@@ -102,15 +96,14 @@ public class ScheduleService {
         schedule.setFk_Id_Room(scheduleInput.getFk_Id_Room());
         schedule.setFk_Id_Client(scheduleInput.getFk_Id_Client());
         schedule.setRoomStatus(scheduleInput.getRoomStatus());
-
+        schedule.setfk_Id_Order(scheduleInput.getfk_Id_Order());
         scheduleRepository.save(schedule);
 
         return schedule;
     }
 
-    public int findLastOrder() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findLastOrder'");
+    public int createOrderNumber() {
+        return inventoryClient.findLastOrder();
     }
 
 }

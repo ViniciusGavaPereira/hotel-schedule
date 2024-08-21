@@ -59,7 +59,6 @@
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
 
-
 		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
 		<dependency>
 			<groupId>javax.mail</groupId>

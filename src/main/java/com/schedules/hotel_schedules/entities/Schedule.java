@@ -2,10 +2,6 @@ package com.schedules.hotel_schedules.entities;
 
 import java.io.Serializable;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.schedules.hotel_schedules.service.ScheduleService;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,13 +10,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Schedule2")
+@Table(name = "Schedule")
 public class Schedule implements Serializable {
 
     @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "EntranceTime")
     private String entranceTime;
 
@@ -39,11 +36,8 @@ public class Schedule implements Serializable {
     @Column(name = "Status", nullable = false)
     private RoomStatus roomStatus;
 
-    @Column(name = "Fk_Id_Pedido", nullable = false)
-    private int fk_Id_Pedido;
-
-    @Autowired
-    private ScheduleService scheduleService;
+    @Column(name = "fk_Id_Order", nullable = false)
+    private int fk_Id_Order;
 
     public Schedule() {
     }
@@ -58,7 +52,7 @@ public class Schedule implements Serializable {
         this.fk_Id_Room = fk_Id_Room;
         this.fk_Id_Client = fk_Id_Client;
         this.roomStatus = RoomStatus.FREE;
-        this.fk_Id_Pedido = createOrderNumber();
+        this.fk_Id_Order = 0;
     }
 
     public Long getId() {
@@ -133,23 +127,19 @@ public class Schedule implements Serializable {
         this.roomStatus = roomStatus;
     }
 
-    public int getFk_Id_Pedido() {
-        return fk_Id_Pedido;
+    public int getfk_Id_Order() {
+        return fk_Id_Order;
     }
 
-    public void setFk_Id_Pedido(int fk_Id_Pedido) {
-        this.fk_Id_Pedido = fk_Id_Pedido;
+    public void setfk_Id_Order(int fk_Id_Order) {
+        this.fk_Id_Order = fk_Id_Order;
     }
 
     @Override
     public String toString() {
         return "Schedule [id=" + id + ", entranceTime=" + entranceTime + ", exitTime=" + exitTime + ", bill=" + bill
                 + ", fk_Id_Room=" + fk_Id_Room + ", fk_Id_Client=" + fk_Id_Client + ", roomStatus=" + roomStatus
-                + ", fk_Id_Pedido=" + fk_Id_Pedido + "]";
-    }
-
-    public int createOrderNumber() {
-        return scheduleService.findLastOrder();
+                + ", fk_Id_Order=" + fk_Id_Order + "]";
     }
 
 }
