@@ -106,4 +106,8 @@ public class ScheduleService {
         return inventoryClient.findLastOrder();
     }
 
+    public List<Schedule> findByTime(String entraceDay, String entranceTime, String exitDay, String exitTime) {
+        return scheduleRepository.findByTime(entraceDay, entranceTime, exitDay, exitTime);
+    }
+
 }

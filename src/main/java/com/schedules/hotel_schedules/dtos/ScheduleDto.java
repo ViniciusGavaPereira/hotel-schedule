@@ -2,7 +2,6 @@ package com.schedules.hotel_schedules.dtos;
 
 import com.schedules.hotel_schedules.entities.Schedule;
 
-
 public class ScheduleDto {
 
     private Long id;

@@ -24,6 +24,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping(value = "/schedule")
@@ -55,6 +56,13 @@ public class ScheduleController {
         // Connect to Room's endpoint
         RoomDto roomResult = scheduleService.findRoom(idRoom);
         return "Person: " + clientResult.toString() + "\nRoom: " + roomResult.toString();
+    }
+
+    @GetMapping("/findByTime/{entraceDay}/{entranceTime}/{exitDay}/{exitTime}")
+    public List<Schedule> getMethodName(@PathVariable String entraceDay, @PathVariable String entranceTime,
+            @PathVariable String exitDay, @PathVariable String exitTime) {
+
+        return scheduleService.findByTime(entraceDay, entranceTime, exitDay, exitTime);
     }
 
     @Transactional
