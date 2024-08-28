@@ -1,11 +1,16 @@
 package com.schedules.hotel_schedules.entities;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+
+import org.springframework.http.HttpStatus;
+
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import exception.CustomApplicationException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -133,6 +138,17 @@ public class Schedule implements Serializable {
         return "Schedule [id=" + id + ", entranceTime=" + entranceTime + ", exitTime=" + exitTime + ", bill=" + bill
                 + ", fk_Id_Room=" + fk_Id_Room + ", fk_Id_Client=" + fk_Id_Client + ", roomStatus=" + roomStatus
                 + ", fk_Id_Order=" + fk_Id_Order + "]";
+    }
+
+    public boolean verifyDates(LocalDate entranceTime, LocalDate exitTime) {
+
+        if (entranceTime.isBefore(exitTime) || entranceTime.isEqual(exitTime)) {
+            return true;
+        } else {
+            throw new CustomApplicationException("Schedule entrance time cannot be before exit time",
+                    HttpStatus.FORBIDDEN);
+        }
+
     }
 
 }

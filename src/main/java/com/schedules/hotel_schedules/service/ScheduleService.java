@@ -71,6 +71,8 @@ public class ScheduleService {
         // Connect to Room's endpoint and verify if the room exist's
         findRoom(scheduleInput.getFk_Id_Room());
 
+        scheduleInput.verifyDates(scheduleInput.getEntranceTime(), scheduleInput.getExitTime());
+
         scheduleInput.setFk_Id_Order(inventoryClient.findLastOrder());
         return scheduleRepository.save(scheduleInput);
 
@@ -91,6 +93,8 @@ public class ScheduleService {
         // Connect to Room's endpoint
         RoomDto room = findRoom(scheduleInput.getFk_Id_Room());
         System.out.println(room.getRoomStatus());
+
+        scheduleInput.verifyDates(scheduleInput.getEntranceTime(), scheduleInput.getExitTime());
 
         schedule.setEntranceTime(scheduleInput.getEntranceTime());
         schedule.setExitTime(scheduleInput.getExitTime());
