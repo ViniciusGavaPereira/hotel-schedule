@@ -6,6 +6,8 @@ import java.time.format.DateTimeFormatterBuilder;
 
 import org.springframework.http.HttpStatus;
 
+import com.schedules.hotel_schedules.entities.Schedule;
+
 import exception.CustomApplicationException;
 
 public class ScheduleTimeDto {
@@ -20,6 +22,12 @@ public class ScheduleTimeDto {
         this.entranceDay = entranceDay;
         this.exitDay = exitDay;
 
+    }
+
+    public ScheduleTimeDto(Schedule schedule) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        this.entranceDay = schedule.getEntranceTime().format(formatter);
+        this.exitDay = schedule.getExitTime().format(formatter);
     }
 
     public String getEntranceDay() {

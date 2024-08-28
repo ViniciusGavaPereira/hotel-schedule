@@ -71,10 +71,17 @@ public class ScheduleService {
         // Connect to Room's endpoint and verify if the room exist's
         findRoom(scheduleInput.getFk_Id_Room());
 
+        // Verify if the date of the entrance os before the exit date
         scheduleInput.verifyDates(scheduleInput.getEntranceTime(), scheduleInput.getExitTime());
 
-        scheduleInput.setFk_Id_Order(inventoryClient.findLastOrder());
-        return scheduleRepository.save(scheduleInput);
+        if ((verifyAvailability(new ScheduleTimeDto(scheduleInput), scheduleInput.getFk_Id_Room())) == true) {
+
+            scheduleInput.setFk_Id_Order(inventoryClient.findLastOrder());
+            return scheduleRepository.save(scheduleInput);
+        } else {
+            throw new CustomApplicationException("Room is already schedule to this period  of time",
+                    HttpStatus.FORBIDDEN);
+        }
 
     }
 
@@ -124,6 +131,27 @@ public class ScheduleService {
         } else {
             throw new CustomApplicationException("There is no schedule in this period of time",
                     HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+    public Boolean verifyAvailability(ScheduleTimeDto scheduleInput, int idRoomInput) {
+
+        List<Schedule> schedulesSearch = scheduleRepository.findByTime(scheduleInput.getEntranceDay(),
+                scheduleInput.getExitDay());
+
+        Schedule result = schedulesSearch.stream()
+                .filter(schedule -> schedule.getFk_Id_Room() == idRoomInput)
+                .findFirst()
+                .orElse(null);
+
+        if (result != null) {
+            System.out.println(result.toString());
+
+            return false;
+        } else {
+            System.out.println("Room is free to schedule");
+            return true;
         }
 
     }

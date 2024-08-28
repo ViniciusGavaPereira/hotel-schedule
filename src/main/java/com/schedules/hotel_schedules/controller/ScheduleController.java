@@ -47,17 +47,6 @@ public class ScheduleController {
         return new ResponseEntity<ScheduleDto>(new ScheduleDto(result), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/v0.5/test/{idPerson}/{idRoom}")
-    public String test(@PathVariable Integer idPerson, @PathVariable Integer idRoom) {
-
-        // Connect to Client's endpoint
-        ClientDto clientResult = scheduleService.findPerson(idPerson);
-
-        // Connect to Room's endpoint
-        RoomDto roomResult = scheduleService.findRoom(idRoom);
-        return "Person: " + clientResult.toString() + "\nRoom: " + roomResult.toString();
-    }
-
     @GetMapping("/findByTime/")
     public List<Schedule> getMethodName(@RequestBody ScheduleTimeDto schedule) {
 
