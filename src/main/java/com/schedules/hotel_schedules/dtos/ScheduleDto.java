@@ -1,12 +1,14 @@
 package com.schedules.hotel_schedules.dtos;
 
+import java.time.LocalDate;
+
 import com.schedules.hotel_schedules.entities.Schedule;
 
 public class ScheduleDto {
 
     private Long id;
-    private String entranceTime;
-    private String exitTime;
+    private LocalDate entranceTime;
+    private LocalDate exitTime;
     private double bill;
     private int fk_Id_Room;
     private int fk_Id_Client;
@@ -15,7 +17,8 @@ public class ScheduleDto {
     public ScheduleDto() {
     }
 
-    public ScheduleDto(Long id, String entranceTime, String exitTime, double bill, int fk_Id_Room, int fk_Id_Client,
+    public ScheduleDto(Long id, LocalDate entranceTime, LocalDate exitTime, double bill, int fk_Id_Room,
+            int fk_Id_Client,
             int fk_Id_Order) {
         this.id = id;
         this.entranceTime = entranceTime;
@@ -28,12 +31,12 @@ public class ScheduleDto {
 
     public ScheduleDto(Schedule schedule) {
         id = schedule.getId();
-        entranceTime = schedule.getEntrance();
-        exitTime = schedule.getExit();
+        entranceTime = schedule.getEntranceTime();
+        exitTime = schedule.getExitTime();
         bill = schedule.getBill();
         fk_Id_Room = schedule.getFk_Id_Room();
         fk_Id_Client = schedule.getFk_Id_Client();
-        fk_Id_Order = schedule.getfk_Id_Order();
+        fk_Id_Order = schedule.getFk_Id_Order();
     }
 
     public Long getId() {
@@ -44,19 +47,19 @@ public class ScheduleDto {
         this.id = id;
     }
 
-    public String getEntranceTime() {
+    public LocalDate getEntranceTime() {
         return entranceTime;
     }
 
-    public void setEntranceTime(String entranceTime) {
+    public void setEntranceTime(LocalDate entranceTime) {
         this.entranceTime = entranceTime;
     }
 
-    public String getExitTime() {
+    public LocalDate getExitTime() {
         return exitTime;
     }
 
-    public void setExitTime(String exitTime) {
+    public void setExitTime(LocalDate exitTime) {
         this.exitTime = exitTime;
     }
 

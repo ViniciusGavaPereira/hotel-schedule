@@ -62,15 +62,16 @@ public class ScheduleService {
         return result;
     }
 
+    // Vai mexer bastante aqui
     public Schedule createSchedule(Schedule scheduleInput) {
 
-        // Connect to Client's endpoint
+        // Connect to Client's endpoint and verify if the client exist's
         findPerson(scheduleInput.getFk_Id_Client());
 
-        // Connect to Room's endpoint
-        RoomDto room = findRoom(scheduleInput.getFk_Id_Room());
+        // Connect to Room's endpoint and verify if the room exist's
+        findRoom(scheduleInput.getFk_Id_Room());
 
-        scheduleInput.setfk_Id_Order(inventoryClient.findLastOrder());
+        scheduleInput.setFk_Id_Order(inventoryClient.findLastOrder());
         return scheduleRepository.save(scheduleInput);
 
     }
@@ -97,7 +98,7 @@ public class ScheduleService {
         schedule.setFk_Id_Room(scheduleInput.getFk_Id_Room());
         schedule.setFk_Id_Client(scheduleInput.getFk_Id_Client());
         schedule.setRoomStatus(scheduleInput.getRoomStatus());
-        schedule.setfk_Id_Order(scheduleInput.getfk_Id_Order());
+        schedule.setFk_Id_Order(scheduleInput.getFk_Id_Order());
         scheduleRepository.save(schedule);
 
         return schedule;
@@ -108,8 +109,7 @@ public class ScheduleService {
     }
 
     public List<Schedule> findByTime(ScheduleTimeDto schedule) {
-        return scheduleRepository.findByTime(schedule.getEntranceDay(), schedule.getEntranceTime(),
-                schedule.getExitDay(), schedule.getExitTime());
+        return scheduleRepository.findByTime(schedule.getEntranceDay(), schedule.getExitDay());
     }
 
 }

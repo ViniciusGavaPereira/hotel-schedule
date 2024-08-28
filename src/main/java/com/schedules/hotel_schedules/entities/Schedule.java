@@ -1,9 +1,15 @@
 package com.schedules.hotel_schedules.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,11 +24,13 @@ public class Schedule implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "EntranceTime")
-    private String entranceTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    @Column(name = "EntranceTime", nullable = false)
+    private LocalDate entranceTime;
 
-    @Column(name = "ExitTime")
-    private String exitTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    @Column(name = "ExitTime", nullable = false)
+    private LocalDate exitTime;
 
     @Column(name = "Bill")
     private double bill;
@@ -33,7 +41,8 @@ public class Schedule implements Serializable {
     @Column(name = "Fk_Id_Client", nullable = false)
     private int fk_Id_Client;
 
-    @Column(name = "Status", nullable = false)
+    @Enumerated(EnumType.STRING) // Usar STRING para mapear o ENUM como uma string no banco de dados
+    @Column(name = "roomStatus", nullable = false)
     private RoomStatus roomStatus;
 
     @Column(name = "fk_Id_Order", nullable = false)
@@ -42,7 +51,7 @@ public class Schedule implements Serializable {
     public Schedule() {
     }
 
-    public Schedule(Long id, String entranceTime, String exitTime, double bill, int fk_Id_Room,
+    public Schedule(Long id, LocalDate entranceTime, LocalDate exitTime, double bill, int fk_Id_Room,
             int fk_Id_Client) {
 
         this.id = id;
@@ -51,7 +60,7 @@ public class Schedule implements Serializable {
         this.bill = bill;
         this.fk_Id_Room = fk_Id_Room;
         this.fk_Id_Client = fk_Id_Client;
-        this.roomStatus = RoomStatus.FREE;
+        this.roomStatus = RoomStatus.OCCUPIED;
         this.fk_Id_Order = 0;
     }
 
@@ -63,19 +72,19 @@ public class Schedule implements Serializable {
         this.id = id;
     }
 
-    public String getEntrance() {
+    public LocalDate getEntranceTime() {
         return entranceTime;
     }
 
-    public void setEntrance(String entranceTime) {
+    public void setEntranceTime(LocalDate entranceTime) {
         this.entranceTime = entranceTime;
     }
 
-    public String getExit() {
+    public LocalDate getExitTime() {
         return exitTime;
     }
 
-    public void setExit(String exitTime) {
+    public void setExitTime(LocalDate exitTime) {
         this.exitTime = exitTime;
     }
 
@@ -103,22 +112,6 @@ public class Schedule implements Serializable {
         this.fk_Id_Client = fk_Id_Client;
     }
 
-    public String getEntranceTime() {
-        return entranceTime;
-    }
-
-    public void setEntranceTime(String entranceTime) {
-        this.entranceTime = entranceTime;
-    }
-
-    public String getExitTime() {
-        return exitTime;
-    }
-
-    public void setExitTime(String exitTime) {
-        this.exitTime = exitTime;
-    }
-
     public RoomStatus getRoomStatus() {
         return roomStatus;
     }
@@ -127,11 +120,11 @@ public class Schedule implements Serializable {
         this.roomStatus = roomStatus;
     }
 
-    public int getfk_Id_Order() {
+    public int getFk_Id_Order() {
         return fk_Id_Order;
     }
 
-    public void setfk_Id_Order(int fk_Id_Order) {
+    public void setFk_Id_Order(int fk_Id_Order) {
         this.fk_Id_Order = fk_Id_Order;
     }
 
