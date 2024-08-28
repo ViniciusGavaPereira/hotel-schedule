@@ -112,8 +112,20 @@ public class ScheduleService {
         return inventoryClient.findLastOrder();
     }
 
-    public List<Schedule> findByTime(ScheduleTimeDto schedule) {
-        return scheduleRepository.findByTime(schedule.getEntranceDay(), schedule.getExitDay());
+    public List<Schedule> findByTime(ScheduleTimeDto scheduleInput) {
+
+        List<Schedule> result = scheduleRepository.findByTime(scheduleInput.getEntranceDay(),
+                scheduleInput.getExitDay());
+
+        scheduleInput.verifyDates(scheduleInput.getEntranceDay(), scheduleInput.getExitDay());
+
+        if (!result.isEmpty()) {
+            return result;
+        } else {
+            throw new CustomApplicationException("There is no schedule in this period of time",
+                    HttpStatus.NOT_FOUND);
+        }
+
     }
 
 }

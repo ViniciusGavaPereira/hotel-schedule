@@ -1,12 +1,9 @@
 package com.schedules.hotel_schedules.entities;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 import org.springframework.http.HttpStatus;
-
-import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

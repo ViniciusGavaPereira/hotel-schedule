@@ -1,5 +1,13 @@
 package com.schedules.hotel_schedules.dtos;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+
+import org.springframework.http.HttpStatus;
+
+import exception.CustomApplicationException;
+
 public class ScheduleTimeDto {
 
     private String entranceDay;
@@ -30,4 +38,20 @@ public class ScheduleTimeDto {
         this.exitDay = exitDay;
     }
 
+    public boolean verifyDates(String entranceTimeInput, String exitTimeInput) {
+
+        DateTimeFormatter f = new DateTimeFormatterBuilder().parseCaseInsensitive()
+                .append(DateTimeFormatter.ofPattern("yyyy-MM-dd")).toFormatter();
+
+        LocalDate entranceTime = LocalDate.parse(entranceTimeInput, f);
+        LocalDate exitTime = LocalDate.parse(exitTimeInput, f);
+
+        if (entranceTime.isBefore(exitTime) || entranceTime.isEqual(exitTime)) {
+            return true;
+        } else {
+            throw new CustomApplicationException("Schedule entrance time cannot be before exit time",
+                    HttpStatus.FORBIDDEN);
+        }
+
+    }
 }
