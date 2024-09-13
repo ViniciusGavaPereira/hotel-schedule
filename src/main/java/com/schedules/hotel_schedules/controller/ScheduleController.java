@@ -53,6 +53,12 @@ public class ScheduleController {
         return scheduleService.findByTime(schedule);
     }
 
+    @GetMapping("/findAllRooms/")
+    public boolean getRooms(@RequestBody ScheduleTimeDto schedule) {
+
+        return true;
+    }
+
     @Transactional
     @PostMapping("/create/v1/")
     public ResponseEntity<ScheduleDto> createSchedule(@RequestBody Schedule scheduleInput) {

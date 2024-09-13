@@ -1,6 +1,14 @@
 package com.schedules.hotel_schedules.dtos;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
+
 import com.schedules.hotel_schedules.entities.RoomStatus;
+
+import exception.CustomApplicationException;
 
 public class RoomDto {
 
@@ -65,6 +73,18 @@ public class RoomDto {
     public String toString() {
         return "Id: " + id + "\nRoomNumber: " + roomNumber + "\nName: " + name + "\nPricePerHour: " + pricePerHour
                 + "\nRoomStatus: " + roomStatus;
+    }
+
+    public Integer verifyRoom(List<Integer> possibilities) {
+
+        Integer result = -1;
+        for (int x = 0; x > possibilities.size(); x++) {
+            if (possibilities.get(x).equals(this.id)) {
+                result = possibilities.get(x);
+            }
+            ;
+        }
+        return result;
     }
 
 }

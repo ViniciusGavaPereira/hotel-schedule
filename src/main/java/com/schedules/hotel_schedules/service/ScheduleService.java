@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import java.util.HashSet;
+
+import java.util.Set;
 
 import com.schedules.hotel_schedules.dtos.ClientDto;
 import com.schedules.hotel_schedules.dtos.RoomDto;
@@ -14,6 +17,7 @@ import com.schedules.hotel_schedules.http.InventoryClient;
 import com.schedules.hotel_schedules.http.PersonClient;
 import com.schedules.hotel_schedules.http.RoomClient;
 import com.schedules.hotel_schedules.repositories.ScheduleRepository;
+import java.util.stream.Collectors;
 
 import exception.CustomApplicationException;
 
@@ -103,16 +107,22 @@ public class ScheduleService {
 
         scheduleInput.verifyDates(scheduleInput.getEntranceTime(), scheduleInput.getExitTime());
 
-        schedule.setEntranceTime(scheduleInput.getEntranceTime());
-        schedule.setExitTime(scheduleInput.getExitTime());
-        schedule.setBill(scheduleInput.getBill());
-        schedule.setFk_Id_Room(scheduleInput.getFk_Id_Room());
-        schedule.setFk_Id_Client(scheduleInput.getFk_Id_Client());
-        schedule.setRoomStatus(scheduleInput.getRoomStatus());
-        schedule.setFk_Id_Order(scheduleInput.getFk_Id_Order());
-        scheduleRepository.save(schedule);
+        if ((verifyAvailability(new ScheduleTimeDto(scheduleInput), scheduleInput.getFk_Id_Room())) == true) {
+            schedule.setEntranceTime(scheduleInput.getEntranceTime());
+            schedule.setExitTime(scheduleInput.getExitTime());
+            schedule.setBill(scheduleInput.getBill());
+            schedule.setFk_Id_Room(scheduleInput.getFk_Id_Room());
+            schedule.setFk_Id_Client(scheduleInput.getFk_Id_Client());
+            schedule.setRoomStatus(scheduleInput.getRoomStatus());
+            schedule.setFk_Id_Order(scheduleInput.getFk_Id_Order());
+            scheduleRepository.save(schedule);
 
-        return schedule;
+            return schedule;
+        } else {
+            throw new CustomApplicationException("Room is already schedule to this period of time",
+                    HttpStatus.FORBIDDEN);
+        }
+
     }
 
     public int createOrderNumber() {
@@ -155,5 +165,25 @@ public class ScheduleService {
         }
 
     }
+
+    /*
+     * public List<RoomDto> findAllRooms(ScheduleTimeDto scheduleInput) {
+     * 
+     * // Pega todos as schedules de um determinado periodo
+     * List<Schedule> schedules = findByTime(scheduleInput);
+     * 
+     * // Puxa apenas os id's destas schedules
+     * List<Integer> listIds = schedules.stream()
+     * .map(e -> e.getId())
+     * .collect(Collectors.toList());
+     * 
+     * // Busca todas as rooms do sistema
+     * List<RoomDto> result = roomClient.findByAll()
+     * .stream().filter(room -> !setIds.contains(room.getId()))
+     * .collect(Collectors.toList());
+     * 
+     * return result;
+     * }
+     */
 
 }
