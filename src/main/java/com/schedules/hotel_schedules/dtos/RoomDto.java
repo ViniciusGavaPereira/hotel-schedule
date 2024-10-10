@@ -80,7 +80,7 @@ public class RoomDto {
         Integer result = -1;
         for (int x = 0; x > possibilities.size(); x++) {
             if (possibilities.get(x).equals(this.id)) {
-                result = possibilities.get(x);
+                result = this.id;
             }
             ;
         }

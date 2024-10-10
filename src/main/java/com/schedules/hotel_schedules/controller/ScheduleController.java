@@ -53,10 +53,10 @@ public class ScheduleController {
         return scheduleService.findByTime(schedule);
     }
 
-    @GetMapping("/findAllRooms/")
-    public boolean getRooms(@RequestBody ScheduleTimeDto schedule) {
+    @GetMapping("/findAllEmptyRooms/")
+    public List<RoomDto> getRooms(@RequestBody ScheduleTimeDto schedule) {
 
-        return true;
+        return scheduleService.findAllRooms(schedule);
     }
 
     @Transactional

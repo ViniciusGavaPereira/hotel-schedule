@@ -1,13 +1,11 @@
 package com.schedules.hotel_schedules.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import java.util.HashSet;
-
-import java.util.Set;
 
 import com.schedules.hotel_schedules.dtos.ClientDto;
 import com.schedules.hotel_schedules.dtos.RoomDto;
@@ -17,7 +15,6 @@ import com.schedules.hotel_schedules.http.InventoryClient;
 import com.schedules.hotel_schedules.http.PersonClient;
 import com.schedules.hotel_schedules.http.RoomClient;
 import com.schedules.hotel_schedules.repositories.ScheduleRepository;
-import java.util.stream.Collectors;
 
 import exception.CustomApplicationException;
 
@@ -166,24 +163,27 @@ public class ScheduleService {
 
     }
 
-    /*
-     * public List<RoomDto> findAllRooms(ScheduleTimeDto scheduleInput) {
-     * 
-     * // Pega todos as schedules de um determinado periodo
-     * List<Schedule> schedules = findByTime(scheduleInput);
-     * 
-     * // Puxa apenas os id's destas schedules
-     * List<Integer> listIds = schedules.stream()
-     * .map(e -> e.getId())
-     * .collect(Collectors.toList());
-     * 
-     * // Busca todas as rooms do sistema
-     * List<RoomDto> result = roomClient.findByAll()
-     * .stream().filter(room -> !setIds.contains(room.getId()))
-     * .collect(Collectors.toList());
-     * 
-     * return result;
-     * }
-     */
+    public List<RoomDto> findAllRooms(ScheduleTimeDto scheduleInput) {
+
+        // Pega todos as schedules de um determinado periodo
+        List<Schedule> schedules = findByTime(scheduleInput);
+
+        // Puxa apenas os id's destas schedules
+        List<Integer> listIds = schedules.stream()
+                .map(e -> Math.toIntExact(e.getFk_Id_Room()))
+                .collect(Collectors.toList());
+
+        // Busca todas as rooms do sistema
+        List<RoomDto> result = roomClient.findByAll();
+
+        for (int x = 0; x < result.size(); x++) {
+            Integer y = result.get(x).verifyRoom(listIds);
+            if (y == -1) {
+
+                result.remove(result.get(x));
+            }
+        }
+        return result;
+    }
 
 }
