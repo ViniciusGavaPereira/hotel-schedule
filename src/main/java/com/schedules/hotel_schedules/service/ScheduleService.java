@@ -78,6 +78,7 @@ public class ScheduleService {
         if ((verifyAvailability(new ScheduleTimeDto(scheduleInput), scheduleInput.getFk_Id_Room())) == true) {
 
             scheduleInput.setFk_Id_Order(inventoryClient.findLastOrder());
+            scheduleInput.setBill(0.00);
             return scheduleRepository.save(scheduleInput);
         } else {
             throw new CustomApplicationException("Room is already schedule to this period  of time",
