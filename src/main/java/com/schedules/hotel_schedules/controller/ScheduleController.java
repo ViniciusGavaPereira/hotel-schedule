@@ -1,5 +1,6 @@
 package com.schedules.hotel_schedules.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,11 @@ public class ScheduleController {
     public List<RoomDto> getRooms(@RequestBody ScheduleTimeDto schedule) {
 
         return scheduleService.findAllRooms(schedule);
+    }
+
+    @GetMapping("/checkout/{scheduleId}/{checkoutTime}")
+    public void checkout(@PathVariable Long scheduleId, LocalDate checkoutTime) {
+        scheduleService.checkout(scheduleId, checkoutTime);
     }
 
     @Transactional

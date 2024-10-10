@@ -1,5 +1,6 @@
 package com.schedules.hotel_schedules.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -187,4 +188,9 @@ public class ScheduleService {
         return result;
     }
 
+    public void checkout(long scheduleInput, LocalDate checkoutDate) {
+        Schedule schedule = findById(scheduleInput);
+        System.out.println(schedule);
+
+    }
 }
